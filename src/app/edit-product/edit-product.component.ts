@@ -4,6 +4,7 @@ import { ProductService } from '../product.service';
 import { first } from "rxjs/operators";
 import { Router } from "@angular/router";
 import { ProductModel } from '../ProductModel';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-edit-product',
@@ -16,7 +17,11 @@ export class EditProductComponent implements OnInit {
   editForm: FormGroup;
   submitted = false;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private productService: ProductService) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private productService: ProductService,
+    private toastr: ToastrService) { }
 
   ngOnInit() {
     let productId = localStorage.getItem("productId");
@@ -37,6 +42,11 @@ export class EditProductComponent implements OnInit {
     this.productService.getProductById(productId).subscribe(data=>{
       console.log(data);
       this.editForm.patchValue(data); //Don't use editForm.setValue() as it will throw console error
+    },
+    data => {
+      this.toastr.error(data.error.message, 'Error', {
+        timeOut: 10000
+      });
     });
   }
 
@@ -51,6 +61,11 @@ export class EditProductComponent implements OnInit {
       .subscribe( data => {
         console.log(data);
         this.router.navigate(['']);
+      },
+      data => {
+        this.toastr.error(data.error.message, 'Error', {
+          timeOut: 10000
+        });
       });
     }
   }

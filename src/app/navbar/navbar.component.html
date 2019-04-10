@@ -1,0 +1,9 @@
+<nav class="navbar navbar-light bg-light">
+    <span class="navbar-brand mb-0 h1">{{title}}</span>
+    <div *ngIf="!authenticated; else elseBlock">
+        <button class="btn btn-outline-success" type="button" (click)='authorize()'>Authorize</button>
+    </div>
+    <ng-template #elseBlock>
+        <button class="btn btn-outline-danger" type="button" (click)='logOut()'>Log Out</button>
+    </ng-template>
+</nav>
