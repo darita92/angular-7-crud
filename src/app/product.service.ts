@@ -14,7 +14,7 @@ export class ProductService {
     private authService: AuthService,
     private cookieService: CookieService
   ) {
-    this.token = cookieService.get('session')
+    this.token = this.cookieService.get('session')
   }
 
   baseurl: string = "http://localhost:3000/";
