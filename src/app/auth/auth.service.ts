@@ -11,7 +11,7 @@ import { UserModel } from './UserModel';
 })
 export class AuthService {
 
-  private authorizationUrl = environment.API_BASE_URL;
+  private baseUrl = environment.API_BASE_URL;
   authenticated: boolean;
   token: string;
   private roleSource = new BehaviorSubject('user');
@@ -30,7 +30,7 @@ export class AuthService {
     };
     return this.http
       .post(
-        this.authorizationUrl + '/authorize',
+        this.baseUrl + '/authorize',
         {
           username: user.username,
           password: user.password
@@ -49,7 +49,7 @@ export class AuthService {
     };
     return this.http
       .get(
-        this.authorizationUrl + '/profile',
+        this.baseUrl + '/profile',
         { headers: headers}
       )
       .pipe(
@@ -70,6 +70,7 @@ export class AuthService {
   destroySession(){
     this.authenticated = false;
     this.tokenSource.next('')
+    this.roleSource.next('user')
     this.cookieService.delete('session')
   }
 

@@ -1,5 +1,5 @@
 export class UserModel {
-    _id: String;
+    _id: string;
     username: String;
     password: String;
     role: String;

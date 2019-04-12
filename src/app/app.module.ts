@@ -16,6 +16,10 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { LoginComponent } from './login/login.component';
 import { ToastrModule } from 'ngx-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { ListUsersComponent } from './list-users/list-users.component';
+import { UserService } from './user.service';
+import { AddUserComponent } from './add-user/add-user.component';
+import { EditUserComponent } from './edit-user/edit-user.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +28,10 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     AddProductComponent,
     EditProductComponent,
     NavbarComponent,
-    LoginComponent
+    LoginComponent,
+    ListUsersComponent,
+    AddUserComponent,
+    EditUserComponent
   ],
   imports: [
     BrowserModule,
@@ -35,9 +42,10 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     ToastrModule.forRoot()
   ],
   providers: [
+    UserService,
     ProductService,
     AuthService,
-    CookieService
+    CookieService,
   ],
   bootstrap: [AppComponent]
 })

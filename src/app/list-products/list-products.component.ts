@@ -28,7 +28,6 @@ export class ListProductsComponent implements OnInit {
   }
 
   isAdmin(){
-    console.log(this.role)
     return this.role === 'admin';
   }
 

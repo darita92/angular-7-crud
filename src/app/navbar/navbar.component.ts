@@ -10,6 +10,7 @@ import { AuthService } from '../auth/auth.service';
 })
 export class NavbarComponent implements OnInit {
   authenticated: boolean = false;
+  role: string = 'user';
 
   @Input() title: string;
   constructor(
@@ -24,6 +25,11 @@ export class NavbarComponent implements OnInit {
         this.authenticated = true
       }
     })
+    this.authService.currentRole.subscribe( role => this.role = role);
+  }
+
+  isAdmin(){
+    return this.role === 'admin';
   }
 
   authorize(){

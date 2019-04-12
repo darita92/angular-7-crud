@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ProductModel } from './ProductModel';
 import { AuthService } from './auth/auth.service';
 import { CookieService } from 'ngx-cookie-service';
+import { UserModel } from './auth/UserModel';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProductService {
+export class UserService {
   token: string;
   constructor(
     private http: HttpClient,
@@ -17,10 +18,10 @@ export class ProductService {
     this.token = cookieService.get('session')
   }
 
-  baseurl: string = "http://localhost:3000/";
+  baseurl: string = environment.API_BASE_URL;
 
-  getAllProducts(){
-    return this.http.get<ProductModel[]>(this.baseurl + 'Products',
+  getAllUsers(){
+    return this.http.get<UserModel[]>(this.baseurl + '/users',
     {
       headers: {
         'Authorization': `Bearer ${this.token}`
@@ -28,8 +29,8 @@ export class ProductService {
     });
   }
 
-  getProductById(id: string){
-    return this.http.get<ProductModel>(this.baseurl + 'Products' + '/' + id,
+  getUserById(id: string){
+    return this.http.get<UserModel>(this.baseurl + '/users' + '/' + id,
     {
       headers: {
         'Authorization': `Bearer ${this.token}`
@@ -37,8 +38,8 @@ export class ProductService {
     });
   }
 
-  addProduct(product: ProductModel){
-    return this.http.post(this.baseurl + 'Products', product,
+  addUser(user: UserModel){
+    return this.http.post(this.baseurl + '/users', user,
     {
       headers: {
         'Authorization': `Bearer ${this.token}`
@@ -46,8 +47,8 @@ export class ProductService {
     });
   }
 
-  deleteProduct(id: string){
-    return this.http.delete(this.baseurl + 'Products' + '/' + id,
+  deleteUser(id: string){
+    return this.http.delete(this.baseurl + '/users' + '/' + id,
     {
       headers: {
         'Authorization': `Bearer ${this.token}`
@@ -55,8 +56,8 @@ export class ProductService {
     });
   }
 
-  updateProduct(product: ProductModel){
-    return this.http.put(this.baseurl + 'Products' + '/' + product._id, product,
+  updateUser(user: UserModel){
+    return this.http.put(this.baseurl + '/users' + '/' + user._id, user,
     {
       headers: {
         'Authorization': `Bearer ${this.token}`
