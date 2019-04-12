@@ -20,17 +20,19 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.authorizeForm = this.formBuilder.group({
-      role: ['user', Validators.required],
+      username: ['', Validators.required],
+      password: ['', Validators.required],
     });
   }
 
   onSubmit(){
     if(this.authorizeForm.valid){
-      this.authService.authorize(this.authorizeForm.value.role)
+      this.authService.authorize(this.authorizeForm.value)
       .subscribe( data => {
-        console.log(data);
         const token = data['token'];
+        const role = data['role']
         this.authService.setSession(token)
+        this.authService.setRole(role)
         this.router.navigate(['']);
       });
     }

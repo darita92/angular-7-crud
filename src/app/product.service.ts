@@ -2,13 +2,20 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ProductModel } from './ProductModel';
 import { AuthService } from './auth/auth.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
-
-  constructor(private http: HttpClient, private authService: AuthService) { }
+  token: string;
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService,
+    private cookiService: CookieService
+  ) {
+    this.token = cookiService.get('session')
+  }
 
   baseurl: string = "http://localhost:3000/";
 
@@ -16,7 +23,7 @@ export class ProductService {
     return this.http.get<ProductModel[]>(this.baseurl + 'Products',
     {
       headers: {
-        'Authorization': `Bearer ${this.authService.token}`
+        'Authorization': `Bearer ${this.token}`
       }
     });
   }
@@ -25,7 +32,7 @@ export class ProductService {
     return this.http.get<ProductModel>(this.baseurl + 'Products' + '/' + id,
     {
       headers: {
-        'Authorization': `Bearer ${this.authService.token}`
+        'Authorization': `Bearer ${this.token}`
       }
     });
   }
@@ -34,7 +41,7 @@ export class ProductService {
     return this.http.post(this.baseurl + 'Products', product,
     {
       headers: {
-        'Authorization': `Bearer ${this.authService.token}`
+        'Authorization': `Bearer ${this.token}`
       }
     });
   }
@@ -43,7 +50,7 @@ export class ProductService {
     return this.http.delete(this.baseurl + 'Products' + '/' + id,
     {
       headers: {
-        'Authorization': `Bearer ${this.authService.token}`
+        'Authorization': `Bearer ${this.token}`
       }
     });
   }
@@ -52,7 +59,7 @@ export class ProductService {
     return this.http.put(this.baseurl + 'Products' + '/' + product._id, product,
     {
       headers: {
-        'Authorization': `Bearer ${this.authService.token}`
+        'Authorization': `Bearer ${this.token}`
       }
     });
   }

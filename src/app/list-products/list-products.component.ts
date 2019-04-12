@@ -3,6 +3,7 @@ import { Router } from "@angular/router";
 import { ProductModel } from '../ProductModel';
 import { ProductService } from '../product.service';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-list-products',
@@ -12,15 +13,23 @@ import { ToastrService } from 'ngx-toastr';
 export class ListProductsComponent implements OnInit {
 
   products: ProductModel[];
+  role: String = 'user';
 
   constructor(
     private productService: ProductService,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
     this.getAllProducts();
+    this.authService.currentRole.subscribe( role => this.role = role);
+  }
+
+  isAdmin(){
+    console.log(this.role)
+    return this.role === 'admin';
   }
 
   getAllProducts(): void {

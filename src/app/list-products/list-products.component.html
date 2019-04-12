@@ -1,5 +1,5 @@
 <div class="container col-md-12"> 
-    <div>
+    <div *ngIf="isAdmin()">
         <button (click)="addProduct()" class="btn btn-info">Add Product</button>
       </div> 
   <h2>All Products</h2>  
@@ -11,7 +11,7 @@
           <th>Description</th> 
           <th>Price($)</th> 
           <th>Company</th>
-          <th>Action</th> 
+          <th *ngIf="isAdmin()">Action</th> 
         </tr>  
       </thead>  
       <tbody>  
@@ -22,7 +22,7 @@
           <td>{{product.price | currency : "USD" : true}}</td> 
           <td>{{product.company}}</td> 
            
-          <td>  
+          <td *ngIf="isAdmin()">  
             <button (click)="deleteProduct(product)" class="btn btn-info"> Delete</button>  
             <button (click)="updateProduct(product)" style="margin-left: 20px;" class="btn btn-info"> Edit</button>  
           </td>  

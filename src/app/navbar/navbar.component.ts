@@ -9,7 +9,7 @@ import { AuthService } from '../auth/auth.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  authenticated: boolean
+  authenticated: boolean = false;
 
   @Input() title: string;
   constructor(
@@ -19,7 +19,11 @@ export class NavbarComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.authenticated = this.cookieService.check('session');
+    this.authService.currentToken.subscribe( token => {
+      if(token){
+        this.authenticated = true
+      }
+    })
   }
 
   authorize(){
@@ -28,6 +32,7 @@ export class NavbarComponent implements OnInit {
 
   logOut(){
     this.authService.destroySession();
+    this.authenticated = false;
     this.router.navigate(['login']);
   }
 
