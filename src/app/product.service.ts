@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ProductModel } from './ProductModel';
 import { AuthService } from './auth/auth.service';
 import { CookieService } from 'ngx-cookie-service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class ProductService {
     this.token = this.cookieService.get('session')
   }
 
-  baseurl: string = "http://localhost:3000/";
+  baseurl: string = environment.API_BASE_URL;
 
   getAllProducts(){
     return this.http.get<ProductModel[]>(this.baseurl + 'Products',
